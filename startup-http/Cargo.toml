@@ -1,0 +1,24 @@
+[package]
+name = "startup-http"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.4.4", features = ["json"] }
+eyre = "0.6.6"
+futures-util = "0.3.21"
+http-body = "0.4.4"
+hyper = "0.14.16"
+opentelemetry = "0.17.0"
+opentelemetry-http = "0.6.0"
+opentelemetry-semantic-conventions = "0.9.0"
+pin-project = "1.0.10"
+serde = { version = "1.0.136", features = ["derive"] }
+thiserror = "1.0.30"
+tower-http = { version = "0.2.1", features = ["trace", "set-header", "compression-deflate", "compression-gzip", "fs"] }
+tower-layer = "0.3.1"
+tower-service = "0.3.1"
+tracing = "0.1.29"
+tracing-opentelemetry = "0.17.0"
