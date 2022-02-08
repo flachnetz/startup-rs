@@ -1,3 +1,4 @@
+use atty::Stream;
 use figment::providers::{Env, Format, Yaml};
 use figment::Error;
 use figment::Figment;
@@ -46,10 +47,7 @@ struct BaseConfig {
     // statsd: HostPort,
 }
 
-pub fn init<C: Default + Serialize + DeserializeOwned>(
-    service_name: impl Into<String>,
-    config: &str,
-) -> Result<C, Error> {
+pub fn init<C: Default + Serialize + DeserializeOwned>(service_name: &str, config: &str) -> Result<C, Error> {
     // install error handler
     color_eyre::install().unwrap();
 
@@ -71,15 +69,22 @@ pub fn init<C: Default + Serialize + DeserializeOwned>(
         .unwrap();
 
     let registry = Registry::default()
-        .with(tracing_subscriber::fmt::layer().with_filter(loglevel))
+        .with(
+            tracing_subscriber::fmt::layer()
+                .with_ansi(atty::is(Stream::Stderr))
+                .with_filter(loglevel),
+        )
         .with(tracing_opentelemetry::layer().with_tracer(tracer));
 
     // TODO maybe move this out here, or put it into some kind of guard / let the app handle this.
-    tracing::info!("Initializing zipkin tracing to {:?}", base_config.zipkin);
     tracing::subscriber::set_global_default(registry).expect("set global tracer");
+
+    tracing::info!("Initializing zipkin tracing to {:?}", base_config.zipkin);
 
     // extract and return app config
     let config = extract_with_default(config)?;
+
+    tracing::info!("Starting application {:?} now", service_name);
 
     Ok(config)
 }

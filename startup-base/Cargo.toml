@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+atty = "0.2.14"
 color-eyre = "0.6.0"
 figment = { version = "0.10.6", features = ["env", "yaml"] }
 opentelemetry = { version = "0.17.0", features = ["rt-tokio"] }
