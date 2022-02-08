@@ -9,6 +9,6 @@ figment = { version = "0.10.6", features = ["env", "yaml"] }
 opentelemetry = { version = "0.17.0", features = ["rt-tokio"] }
 opentelemetry-zipkin = { version = "0.15.0", features = ["reqwest-client"], default-features = false }
 serde = { version = "1.0.136", features = ["derive"] }
-tracing = "0.1.29"
-tracing-opentelemetry = { version = "0.17.0" }
-tracing-subscriber = { version = "0.3.7", features = ["fmt", "registry"] }
+tracing = "0.1.30"
+tracing-opentelemetry = "0.17.0"
+tracing-subscriber = { version = "0.3.8", features = ["fmt", "registry"] }
