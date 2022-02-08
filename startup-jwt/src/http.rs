@@ -1,9 +1,9 @@
 use axum::{
-    AddExtensionLayer,
     async_trait,
     extract::{Extension, FromRequest, RequestParts, TypedHeader},
+    AddExtensionLayer,
 };
-use headers::{Authorization, authorization::Bearer};
+use headers::{authorization::Bearer, Authorization};
 use http::StatusCode;
 use jsonwebtoken::jwk::JwkSet;
 use reqwest::Client;
@@ -41,9 +41,9 @@ pub struct Jwt<C: DeserializeOwned>(pub C);
 
 #[async_trait]
 impl<B, C> FromRequest<B> for Jwt<C>
-    where
-        B: Send,
-        C: DeserializeOwned,
+where
+    B: Send,
+    C: DeserializeOwned,
 {
     type Rejection = StatusCode;
 

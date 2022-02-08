@@ -1,11 +1,11 @@
+use figment::providers::{Env, Format, Yaml};
 use figment::Error;
 use figment::Figment;
-use figment::providers::{Env, Format, Yaml};
-use serde::{Deserialize, Serialize};
 use serde::de::DeserializeOwned;
-use tracing_subscriber::{Layer, Registry};
+use serde::{Deserialize, Serialize};
 use tracing_subscriber::filter::LevelFilter;
 use tracing_subscriber::layer::SubscriberExt;
+use tracing_subscriber::{Layer, Registry};
 
 #[macro_export]
 macro_rules! init {
@@ -42,7 +42,6 @@ struct BaseConfig {
 
     // TODO probably move into a monitoring package
     zipkin: String,
-
     // TODO add metrics
     // statsd: HostPort,
 }

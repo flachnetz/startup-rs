@@ -3,9 +3,9 @@ use std::str::FromStr;
 
 use futures_core::future::BoxFuture;
 use serde::{Deserialize, Serialize};
-use sqlx::{ConnectOptions, Database, PgPool, Pool, Postgres};
 use sqlx::migrate::Migrator;
 use sqlx::postgres::PgConnectOptions;
+use sqlx::{ConnectOptions, Database, PgPool, Pool, Postgres};
 use tracing::info;
 
 #[derive(Debug, Serialize, Deserialize)]

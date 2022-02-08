@@ -1,14 +1,14 @@
-use std::{borrow::Cow, error::Error as StdError, future::Future, pin::Pin, task::Poll};
 use std::fmt::Debug;
+use std::{borrow::Cow, error::Error as StdError, future::Future, pin::Pin, task::Poll};
 
 use axum::body::BoxBody;
 use axum::http::Request;
 use futures_util::FutureExt as f_FutureExt;
-use hyper::{header, HeaderMap, Method, Response, Version};
 use hyper::body::{Bytes, HttpBody};
-use opentelemetry::Context;
-use opentelemetry::trace::{SpanKind, StatusCode, TraceContextExt, Tracer};
+use hyper::{header, HeaderMap, Method, Response, Version};
 use opentelemetry::trace::FutureExt;
+use opentelemetry::trace::{SpanKind, StatusCode, TraceContextExt, Tracer};
+use opentelemetry::Context;
 use opentelemetry_http::HeaderExtractor;
 use opentelemetry_semantic_conventions::trace::{
     HTTP_FLAVOR, HTTP_METHOD, HTTP_STATUS_CODE, HTTP_TARGET, HTTP_URL, HTTP_USER_AGENT,
@@ -63,8 +63,8 @@ impl Layer {
 }
 
 impl<S> tower_layer::Layer<S> for Layer
-    where
-        S: Clone,
+where
+    S: Clone,
 {
     type Service = Service<S>;
 
@@ -83,26 +83,26 @@ pub struct Service<S: Clone> {
 }
 
 impl<S> Service<S>
-    where
-        S: Clone,
+where
+    S: Clone,
 {
     fn new(inner: S) -> Self {
         Self { inner }
     }
 }
 
-type CF<R, E> = dyn Future<Output=Result<R, E>> + Send;
+type CF<R, E> = dyn Future<Output = Result<R, E>> + Send;
 
 impl<B, S> tower_service::Service<Request<B>> for Service<S>
-    where
-        S: tower_service::Service<
-            Request<B>,
-            Response=Response<http_body::combinators::UnsyncBoxBody<Bytes, axum::Error>>,
-        >,
-        S::Future: 'static + Send,
-        B: 'static,
-        S::Error: std::fmt::Debug + StdError,
-        S: Clone,
+where
+    S: tower_service::Service<
+        Request<B>,
+        Response = Response<http_body::combinators::UnsyncBoxBody<Bytes, axum::Error>>,
+    >,
+    S::Future: 'static + Send,
+    B: 'static,
+    S::Error: std::fmt::Debug + StdError,
+    S: Clone,
 {
     type Response = S::Response;
     type Error = S::Error;
@@ -207,7 +207,6 @@ fn http_flavor(version: Version) -> Cow<'static, str> {
         other => format!("{:?}", other).into(),
     }
 }
-
 
 #[pin_project::pin_project]
 struct EndSpanBody {

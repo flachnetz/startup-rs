@@ -1,8 +1,8 @@
-use jsonwebtoken::{DecodingKey, Validation};
 use jsonwebtoken::jwk::{AlgorithmParameters, Jwk, JwkSet};
+use jsonwebtoken::{DecodingKey, Validation};
 use reqwest::Client;
-use serde::{Deserialize, Serialize};
 use serde::de::DeserializeOwned;
+use serde::{Deserialize, Serialize};
 
 pub use crate::http::{Jwt, JwtAuth};
 
