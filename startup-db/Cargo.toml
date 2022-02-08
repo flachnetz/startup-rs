@@ -1,0 +1,15 @@
+[package]
+name = "startup-db"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures-core = "0.3.21"
+serde = { version = "1.0.136", features = ["derive"] }
+tracing = "0.1.30"
+url = { version = "2.2.2", features = ["serde"] }
+
+sqlx = { version = "0.5.10", features = ["postgres", "runtime-tokio-native-tls"] }
+log = "0.4.14"
