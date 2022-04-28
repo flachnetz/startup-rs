@@ -2,11 +2,14 @@ use atty::Stream;
 use figment::providers::{Env, Format, Yaml};
 use figment::Error;
 use figment::Figment;
+use opentelemetry::sdk::trace;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 use tracing_subscriber::filter::LevelFilter;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::{Layer, Registry};
+
+mod idgenerator;
 
 #[macro_export]
 macro_rules! init {
@@ -62,9 +65,13 @@ pub fn init<C: Default + Serialize + DeserializeOwned>(service_name: &str, confi
 
     opentelemetry::global::set_text_map_propagator(opentelemetry_zipkin::Propagator::new());
 
+    let trace_config = trace::Config::default()
+        .with_id_generator(idgenerator::IdGenerator64);
+
     let tracer = opentelemetry_zipkin::new_pipeline()
         .with_service_name(service_name)
         .with_collector_endpoint(base_config.zipkin.clone())
+        .with_trace_config(trace_config)
         .install_batch(opentelemetry::runtime::Tokio)
         .unwrap();
 

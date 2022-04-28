@@ -1,7 +1,6 @@
 use axum::{
     async_trait,
     extract::{Extension, FromRequest, RequestParts, TypedHeader},
-    AddExtensionLayer,
 };
 use headers::{authorization::Bearer, Authorization};
 use http::StatusCode;
@@ -32,8 +31,8 @@ impl JwtAuth {
         })
     }
 
-    pub fn into_layer(self) -> AddExtensionLayer<Self> {
-        AddExtensionLayer::new(self)
+    pub fn into_layer(self) -> Extension<Self> {
+        Extension(self)
     }
 }
 
