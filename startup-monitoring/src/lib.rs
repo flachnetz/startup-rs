@@ -6,7 +6,7 @@ mod idgenerator;
 
 #[derive(Default, Serialize, Deserialize)]
 pub struct MonitoringConfig {
-    zipkin: Option<String>,
+    pub zipkin: Option<String>,
     // statsd: HostPort,
 }
 
