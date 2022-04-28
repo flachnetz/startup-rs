@@ -10,7 +10,7 @@ axum = { version = "0.5.4", features = ["json"] }
 eyre = "0.6.8"
 futures-util = "0.3.21"
 http-body = "0.4.4"
-hyper = "0.14.18"
+hyper = "^0.14.17"
 opentelemetry = "0.17.0"
 opentelemetry-http = "0.6.0"
 opentelemetry-semantic-conventions = "0.9.0"
