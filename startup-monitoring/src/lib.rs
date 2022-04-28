@@ -7,11 +7,12 @@ mod idgenerator;
 #[derive(Default, Serialize, Deserialize)]
 pub struct MonitoringConfig {
     pub zipkin: Option<String>,
+    pub zipkin_service_name: String,
     // statsd: HostPort,
 }
 
 impl MonitoringConfig {
-    pub fn setup(&self, service_name: &str) -> Result<()> {
+    pub fn setup(&self) -> Result<()> {
         if let Some(zipkin) = self.zipkin.as_ref() {
             tracing::info!("Setup zipkin tracing to {}", zipkin);
 
@@ -21,7 +22,7 @@ impl MonitoringConfig {
                 .with_id_generator(idgenerator::IdGenerator64);
 
             let tracer = opentelemetry_zipkin::new_pipeline()
-                .with_service_name(service_name)
+                .with_service_name(&self.zipkin_service_name)
                 .with_collector_endpoint(zipkin)
                 .with_trace_config(trace_config)
                 .install_batch(opentelemetry::runtime::Tokio)
