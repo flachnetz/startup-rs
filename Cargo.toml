@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "startup-base",
+    "startup-monitoring",
     "startup-http",
     "startup-jwt",
     "startup-db",
