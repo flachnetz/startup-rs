@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 mod idgenerator;
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct MonitoringConfig {
     pub zipkin: Option<String>,
     pub zipkin_service_name: String,
