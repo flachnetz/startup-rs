@@ -6,19 +6,19 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = { version = "0.5.4", features = ["json"] }
+axum = { version = "0.6.2", features = ["json"] }
 eyre = "0.6.8"
-futures-util = "0.3.21"
-http-body = "0.4.4"
-hyper = "^0.14.17"
-opentelemetry = "0.17.0"
-opentelemetry-http = "0.6.0"
-opentelemetry-semantic-conventions = "0.9.0"
-pin-project = "1.0.10"
-serde = { version = "1.0.136", features = ["derive"] }
-thiserror = "1.0.30"
-tower-http = { version = "0.3.0", features = ["trace", "set-header", "compression-deflate", "compression-gzip", "fs"] }
-tower-layer = "0.3.1"
-tower-service = "0.3.1"
-tracing = "0.1.34"
-tracing-opentelemetry = "0.17.2"
+futures-util = "0.3.25"
+http-body = "0.4.5"
+hyper = "0.14.23"
+opentelemetry = "0.18.0"
+opentelemetry-http = "0.7.0"
+opentelemetry-semantic-conventions = "0.10.0"
+pin-project = "1.0.12"
+serde = { version = "1.0.152", features = ["derive"] }
+thiserror = "1.0.38"
+tower-http = { version = "0.3.5", features = ["trace", "set-header", "compression-deflate", "compression-gzip", "fs"] }
+tower-layer = "0.3.2"
+tower-service = "0.3.2"
+tracing = "0.1.37"
+tracing-opentelemetry = "0.18.0"

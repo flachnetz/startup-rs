@@ -1,9 +1,11 @@
 use axum::{
     async_trait,
-    extract::{Extension, FromRequest, RequestParts, TypedHeader},
+    extract::{Extension, TypedHeader},
 };
-use headers::{authorization::Bearer, Authorization};
+use axum::extract::FromRequestParts;
+use headers::{Authorization, authorization::Bearer};
 use http::StatusCode;
+use http::request::Parts;
 use jsonwebtoken::jwk::JwkSet;
 use reqwest::Client;
 use serde::de::DeserializeOwned;
@@ -39,23 +41,23 @@ impl JwtAuth {
 pub struct Jwt<C: DeserializeOwned>(pub C);
 
 #[async_trait]
-impl<B, C> FromRequest<B> for Jwt<C>
+impl<S, C> FromRequestParts<S> for Jwt<C>
 where
-    B: Send,
+    S: Send + Sync,
     C: DeserializeOwned,
 {
     type Rejection = StatusCode;
 
-    #[tracing::instrument(name = "parse-jwt", skip(req))]
-    async fn from_request(req: &mut RequestParts<B>) -> Result<Self, Self::Rejection> {
-        let TypedHeader(Authorization(bearer)) = TypedHeader::<Authorization<Bearer>>::from_request(req)
+    #[tracing::instrument(name = "parse-jwt", skip_all)]
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let TypedHeader(Authorization(bearer)) = TypedHeader::<Authorization<Bearer>>::from_request_parts(parts, state)
             .await
             .map_err(|_err| {
                 debug!("No 'Authorization' header found");
                 StatusCode::UNAUTHORIZED
             })?;
 
-        let Extension(auth) = Extension::<JwtAuth>::from_request(req).await.map_err(|_err| {
+        let Extension(auth) = Extension::<JwtAuth>::from_request_parts(parts, state).await.map_err(|_err| {
             error!("No 'JwtAuth' found on request. Did you add the layer?");
             StatusCode::INTERNAL_SERVER_ERROR
         })?;

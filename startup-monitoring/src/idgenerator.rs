@@ -1,6 +1,6 @@
 use rand::{rngs, Rng};
 use std::cell::RefCell;
-use opentelemetry::trace;
+use opentelemetry::sdk::trace;
 use opentelemetry::trace::{SpanId, TraceId};
 
 /// Generates Trace and Span ids using a random number generator
